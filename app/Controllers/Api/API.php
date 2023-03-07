@@ -15,5 +15,16 @@ abstract class API
         header("Content-type: application/json");
     }
 
-   
+    public static function generalValidation()
+    {
+        // if(!self::isHttps()){
+        //     $message = "Forbidden - HTTP not allowed";
+        //     self::response([], $message, FALSE, 403);
+        // }
+
+        if(self::method() !== 'post'){
+            $message = 'Just POST Method is Allowed';
+            self::response([], $message, FALSE, 405);
+        }
+    }
 }
