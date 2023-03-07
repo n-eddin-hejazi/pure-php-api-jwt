@@ -54,4 +54,21 @@ abstract class API
         }
          return  (object)$request;
     }
+
+    public static function response(array $data = [], string $errorMessage = NULL, bool $done = TRUE, int $statusCode = 200, bool $token = FALSE)
+    {
+        http_response_code($statusCode);
+        if($token){
+            $data +=['Token' => self::generateToken()];
+        }
+        $response = [
+            'data' => $data,
+            'errorMessage' => $errorMessage,
+            'done' => $done,
+            'statusCode' => $statusCode
+        ];
+        echo json_encode($response, JSON_PRETTY_PRINT);
+        exit;
+    }
+
 }
