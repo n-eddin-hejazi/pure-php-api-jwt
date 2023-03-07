@@ -27,4 +27,18 @@ abstract class API
             self::response([], $message, FALSE, 405);
         }
     }
+
+    public static function method()
+    {
+        return strtolower($_SERVER['REQUEST_METHOD']);
+    }
+
+    public static function isHttps()
+    {
+        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on'){
+            return true;
+        }
+        
+        return false;
+    }
 }
