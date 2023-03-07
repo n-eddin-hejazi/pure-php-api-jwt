@@ -16,6 +16,7 @@ use Carbon\Carbon;
     QueryBuilder::make(DBConnection::make());
     require_once 'routes/web.php';
     require_once 'routes/admin.php';
+    require_once 'routes/api.php';
     (new Route)->resolve();
 
        
