@@ -102,4 +102,18 @@ abstract class API
         
         return false;
     }
+
+    public static function checkAuthentication() : void
+    {
+        $token = self::getToken();
+        if($token){
+            try {
+                JWT::decode($token, new Key(self::$secret_key, 'HS256'));
+            } catch (\Exception $e) {
+                self::response([], 'Unauthorizrd.', FALSE, 401);
+            }
+        }else{
+            self::response([], 'Missing token.', FALSE, 502);
+        }
+    }
 }
