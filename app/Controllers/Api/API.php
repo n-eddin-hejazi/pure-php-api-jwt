@@ -71,4 +71,26 @@ abstract class API
         exit;
     }
 
+    private static function generateToken()
+    {
+        $iss = 'localhost';
+        $iat = time();
+        $nbf = $iat ;
+        $exp = $iat + self::$expiration_time_of_jwt_token;
+        $aud = 'myusers';
+
+        $payload = [
+            'iss' => $iss,
+            'iat' => $iat,
+            'nbf' => $nbf,
+            'exp' => $exp,
+            'aud' => $aud,
+            // 'data' => [
+            //     'user_id' => 1
+            // ]
+        ];
+
+        return JWT::encode($payload, self::$secret_key, 'HS256');
+    }
+
 }
