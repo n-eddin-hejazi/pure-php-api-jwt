@@ -41,4 +41,17 @@ abstract class API
         
         return false;
     }
+
+    public function request()
+    {
+        $request = $_REQUEST;
+        // file_get_contents('php://input'); is a PHP function call that retrieves the raw request body sent in an HTTP request
+        // In general, when data is sent in an HTTP request, it can be sent in different formats, such as application/json, application/x-www-form-urlencoded, multipart/form-data, or others. When data is sent in application/json format, it is typically sent in the request body as a raw JSON string.
+        // The file_get_contents() function in PHP allows you to read the contents of a file into a string. In the case of HTTP requests, the php://input stream is a special read-only stream that allows you to read the raw request body.
+        $data = json_decode(file_get_contents('php://input'), true);
+        if(is_array($data)){
+            $request += $data;
+        }
+         return  (object)$request;
+    }
 }
