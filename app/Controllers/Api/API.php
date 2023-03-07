@@ -93,4 +93,13 @@ abstract class API
         return JWT::encode($payload, self::$secret_key, 'HS256');
     }
 
+    private static function getToken()
+    {
+        $headers = getallheaders();
+        if(isset($headers['Token'])){
+            return $headers['Token'];
+        }
+        
+        return false;
+    }
 }
