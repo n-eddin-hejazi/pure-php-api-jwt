@@ -28,33 +28,13 @@ class LoginController extends API
         
     }
 
-
     private function validation()
     {
-        $this->securityValidation();
+        self::securityValidation();
         self::generalValidation();
         $this->emailValidation();
         $this->passwordValidation();
     }
-
-    private function securityValidation()
-    {
-        if (!isset(getallheaders()['Secret'])) {
-            $message = 'Missing secret key.';
-            self::response([], $message, FALSE, 422);
-        }
-        
-        if (empty(getallheaders()['Secret'])) {
-            $message = 'Secret key is empty.';
-            self::response([], $message, FALSE, 422);
-        }
-
-        if (utf8_decode(getallheaders()['Secret']) != utf8_decode($this->mobile_secret)) {
-            $message = 'Invalid secret key.';
-            self::response([], $message, FALSE, 422);
-        }
-    }
-  
 
     private function emailValidation()
     {
