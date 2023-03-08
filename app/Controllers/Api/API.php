@@ -6,7 +6,7 @@ use Firebase\JWT\Key;
 
 abstract class API
 {   
-    protected $mobile_secret = 'aAce3324ASDd21*643!#FDHY7546w`zasdl;2le"2ewe1!a#-+';
+    private static $mobile_secret = 'aAce3324ASDd21*643!#FDHY7546w`zasdl;2le"2ewe1!a#-+';
     private static $secret_key = 'ASDFLESKF#@$@#RSDLK#@!$#@%T#$43243213!SDASDASD!12312SADASDQWe232';
     private static $expiration_time_of_jwt_token = 31536000; // one year
 
@@ -25,6 +25,24 @@ abstract class API
         if(self::method() !== 'post'){
             $message = 'Just POST Method is Allowed';
             self::response([], $message, FALSE, 405);
+        }
+    }
+
+    public static function securityValidation()
+    {
+        if (!isset(getallheaders()['Secret'])) {
+            $message = 'Missing secret key.';
+            self::response([], $message, FALSE, 422);
+        }
+        
+        if (empty(getallheaders()['Secret'])) {
+            $message = 'Secret key is empty.';
+            self::response([], $message, FALSE, 422);
+        }
+
+        if (utf8_decode(getallheaders()['Secret']) != utf8_decode(self::$mobile_secret)) {
+            $message = 'Invalid secret key.';
+            self::response([], $message, FALSE, 422);
         }
     }
 
